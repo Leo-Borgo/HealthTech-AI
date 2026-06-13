@@ -8,17 +8,26 @@ Permite al usuario describir síntomas mediante un chatbot, visualizar hospitale
 y centros de salud reales cercanos en un mapa interactivo, y consultar una guía
 paso a paso de RCP.
 
-Esta es una entrega de avance: por ahora el proyecto funciona 100% en el
-navegador, sin necesidad de levantar un servidor. La parte de backend
-(evaluación de triage por API y registro de fichas médicas) se incorporará
-en la entrega final.
+Esta es una entrega de avance. El frontend funciona completamente en el navegador
+abriendo index.html directamente, sin instalar nada ni levantar un servidor.
+
+IMPORTANTE — Funcionalidades disponibles en esta entrega:
+  ✔ Chatbot de orientación con más de 45 categorías de síntomas
+  ✔ Mapa interactivo con hospitales reales cercanos (OpenStreetMap)
+  ✔ Guía paso a paso de RCP
+  ✔ Botón de llamada directa al 911
+  ✔ Lógica de triaje (evaluación de riesgo) → solo por consola (CLI)
+  ✔ Registro de ficha médica personal → solo por consola (CLI)
+
+  ✘ El ingreso de datos personales y la evaluación de triaje NO están
+    disponibles desde el navegador todavía. Esas funciones se conectarán
+    al frontend en la entrega final mediante una API REST (Flask).
 
 Tecnologías
 -----------
-Frontend : HTML5, CSS3, JavaScript vanilla, Leaflet.js (mapas), Overpass API
-           y Nominatim (OpenStreetMap) para ubicar hospitales cercanos.
-Backend  : Python 3.10+ (scripts de consola, se usan para probar la lógica
-           de triage y ficha médica de forma independiente).
+Frontend : HTML5, CSS3, JavaScript vanilla, Leaflet.js (mapas),
+           Overpass API y Nominatim (OpenStreetMap) para hospitales cercanos.
+Backend  : Python 3.10+ (scripts de consola independientes del frontend).
 
 Estructura del proyecto
 -----------------------
@@ -26,14 +35,15 @@ HealthTech/
 ├── frontend/
 │   ├── index.html
 │   ├── app.js
-│   └── style.css
+│   ├── style.css
+│   └── logo_png.png
 ├── backend/
-│   ├── triage.py           ← Lógica de evaluación de riesgo (por consola)
-│   ├── usuarios.py         ← Registro de fichas médicas (por consola)
-│   └── utils.py            ← Funciones auxiliares compartidas
+│   ├── triage.py       ← Lógica de evaluación de riesgo (solo consola)
+│   ├── usuarios.py     ← Registro de fichas médicas (solo consola)
+│   └── utils.py        ← Funciones auxiliares compartidas
 └── docs/
-    ├── HealTech_Ficha-Tecnica.pdf.docx
-    └── HealthTech_Stakeholders.pdf.docx
+    ├── HealthTech_Ficha-Tecnica.pdf
+    └── HealthTech_Stakeholders.pdf
 
 Cómo ejecutar (modo local, sin servidor)
 -----------------------------------------
@@ -45,12 +55,11 @@ Cómo ejecutar (modo local, sin servidor)
 
 Nota sobre el mapa de hospitales
 ---------------------------------
-El mapa ya no usa una lista fija de hospitales. Al abrir la sección
-"Hospitales", se busca tu ubicación (con tu permiso) y se consulta en
-tiempo real OpenStreetMap (vía Overpass API) para mostrar hospitales y
-centros de salud reales cercanos a esa ubicación. Si buscás otra
-dirección con el buscador del mapa, los hospitales se actualizan según
-esa nueva ubicación.
+Los hospitales no están escritos a mano. Al abrir la sección "Hospitales",
+se busca la ubicación del usuario (con su permiso) y se consulta en tiempo
+real OpenStreetMap (vía Overpass API) para mostrar hospitales y centros de
+salud reales en un radio de 5 km. Si se busca otra dirección con el buscador
+del mapa, los marcadores se actualizan automáticamente.
 
 Uso del CLI (scripts de Python, independientes del frontend)
 --------------------------------------------------------------
@@ -59,10 +68,19 @@ Uso del CLI (scripts de Python, independientes del frontend)
 
 Próximos pasos (entrega final)
 --------------------------------
-- Levantar un servidor (Flask) que conecte el frontend con el backend
-  Python vía API REST (endpoints /api/triage y /api/ficha).
-- Persistencia de fichas médicas en una base de datos.
+- CONFIRMADO: Levantar un servidor Flask y conectar el frontend con el
+  backend vía API REST, para que el triaje y el registro de fichas médicas
+  funcionen desde el navegador (no solo por consola).
+- CONFIRMADO: Publicar la app en una plataforma de hosting (ej. Vercel)
+  para que sea accesible desde una URL pública.
+- CONFIRMADO: Mejoras visuales generales (diseño, colores, responsive).
+- CONFIRMADO: Expandir el chatbot con más categorías, palabras clave y
+  un algoritmo de coincidencia mejorado.
+- CONFIRMADO: Mejorar los popups del mapa de hospitales para mostrar
+  información completa (horarios, especialidades, si está abierto/cerrado).
+- EXPLORATORIO: Evaluar la integración con un modelo de IA para entender
+  síntomas en lenguaje natural (en lugar de palabras clave fijas).
 
 Autores
 -------
-Equipo HealthTech-AI
+Equipo HealthTech-AI — Leonardo Borgo · Matías Crego
