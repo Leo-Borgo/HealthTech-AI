@@ -65,9 +65,10 @@ button { cursor: pointer; border: none; outline: none; font-family: inherit; }
 }
 
 .logo-heart {
-  width: 26px;
-  height: 26px;
+  width: auto;
+  height: 40px;
   flex-shrink: 0;
+  object-fit: contain;
 }
 
 .logo-text {
@@ -536,7 +537,7 @@ button { cursor: pointer; border: none; outline: none; font-family: inherit; }
 
   .logo-health { font-size: 20px !important; }
   .logo-tech { font-size: 14px !important; }
-  .logo-heart { width: 30px !important; height: 30px !important; }
+  .logo-heart { width: auto !important; height: 48px !important; }
 
   .btn-llamar { font-size: 17px; height: 42px; }
 
